@@ -1,0 +1,16 @@
+{
+    "name": "SideXP.Unity.SceneRefs",
+    "rootNamespace": "SideXP.SceneRefs",
+    "references": [
+        "GUID:9283ff1ac70fa684e99dfc05c2583175"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

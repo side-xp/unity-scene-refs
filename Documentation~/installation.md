@@ -1,5 +1,9 @@
 # Installation
 
+## Dependencies
+
+🔗 Requires our [Core library package](https://github.com/side-xp/unity-core)
+
 ## Option 1: Using the Package Manager
 
 1. In your *Unity* project, go to `Window > Package Management > Package Manager` (or `Window > Package Manager` for *Unity 6.0-*)
