@@ -1,10 +1,17 @@
-# Sideways Experiments Unity Package (@todo)
+# Scene Refs
 
-<!-- @todo Write package description and minimum Unity version if applicable -->
+One of the historical flaws of Unity is that [`SceneAsset`](https://docs.unity3d.com/ScriptReference/SceneAsset.html), the type that represents the actual asset of a scene, is declared in `UnityEditor`, making this kind of asset available only in the editor.
+
+Scene references assets (or *`SceneRef`*) fix this flaw, and allow you to use asset references instead of names or ids when it comes to load your scenes at runtime.
 
 ## Features
 
-<!-- @todo Describe the features included in this package -->
+- `SceneRef` assets
+- Automatic processor to keep names, paths and ids of scenes in sync
+
+## Dependencies
+
+🔗 Requires our [Core library package](https://github.com/side-xp/unity-core)
 
 ## Installation
 
@@ -28,7 +35,7 @@
 
 ## Documentation & Help
 
-Complete documentation available at https://side-xp.github.io/@todo
+Complete documentation available at https://side-xp.github.io/unity-scene-refs
 
 If you need help or just want to chat with the community and the *Sideways Experiments* core team, you're welcome to join our [Discord server](https://discord.gg/bMK2d47JaE)!
 

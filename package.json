@@ -1,8 +1,8 @@
 {
-  "name": "com.side-xp.@todo",
+  "name": "com.side-xp.scene-refs",
   "version": "0.0.0",
-  "description": "@todo",
-  "displayName": "SideXP - @todo",
+  "description": "Allows you to use asset references instead of names and ids to load your scenes.",
+  "displayName": "SideXP - Scene Refs",
   "unity": "2021.3",
   "author": {
     "name": "Sideways Experiments",
