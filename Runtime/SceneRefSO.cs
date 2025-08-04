@@ -1,9 +1,3 @@
-// MIT License
-// Sideways Experiments (c) 2025
-// https://sideways-experiments.com
-// Author:	Sideways Experiments
-// Contact:	dev@side-xp.com
-
 using System.IO;
 
 using UnityEngine;
