@@ -9,7 +9,7 @@ namespace SideXP.SceneRefs
     /// <summary>
     /// Represents a scene in the project at runtime.
     /// </summary>
-    [HelpURL(Constants.BaseHelpUrl + "/api/SideXP.SceneRefs/ " + nameof(SceneRefSO))]
+    [HelpURL(Constants.BaseHelpUrl + "/api/SideXP.SceneRefs/" + nameof(SceneRefSO))]
     public class SceneRefSO : ScriptableObject
     {
 

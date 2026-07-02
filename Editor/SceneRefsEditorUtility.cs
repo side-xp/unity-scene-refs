@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.IO;
 
 using UnityEngine;
@@ -25,8 +26,25 @@ namespace SideXP.SceneRefs.EditorOnly
         /// <remarks>The new <see cref="SceneRefSO"/> assets are generated in the same folder as the scene they represent.</remarks>
         public static void GenerateAllSceneRefs()
         {
+            // Collect the scenes that already have a ref once, so we don't rescan every ref for each scene (which would be O(n²)).
+            HashSet<SceneAsset> referencedScenes = new HashSet<SceneAsset>();
+            foreach (SceneRefSO sceneRef in ObjectUtility.FindAssets<SceneRefSO>(false))
+            {
+                if (sceneRef.SceneAsset != null)
+                    referencedScenes.Add(sceneRef.SceneAsset);
+            }
+
             foreach (SceneAsset sceneAsset in ObjectUtility.FindAssets<SceneAsset>())
-                GenerateSceneRef(sceneAsset, true);
+            {
+                string scenePath = AssetDatabase.GetAssetPath(sceneAsset);
+                // Only generate refs for scenes inside this project's /Assets directory that don't already have one.
+                if (!scenePath.StartsWith(PathUtility.AssetsDirectory))
+                    continue;
+                if (referencedScenes.Contains(sceneAsset))
+                    continue;
+
+                CreateSceneRefAsset(sceneAsset, scenePath);
+            }
         }
 
         /// <inheritdoc cref="GenerateSceneRef(SceneAsset, bool)"/>
@@ -186,6 +204,18 @@ namespace SideXP.SceneRefs.EditorOnly
                 return false;
             }
 
+            CreateSceneRefAsset(sceneAsset, scenePath);
+            return true;
+        }
+
+        /// <summary>
+        /// Creates and saves a <see cref="SceneRefSO"/> asset next to a given scene, without checking whether one already exists.
+        /// </summary>
+        /// <param name="sceneAsset">The scene asset to create a ref for.</param>
+        /// <param name="scenePath">The asset path of <paramref name="sceneAsset"/>.</param>
+        /// <returns>Returns the created <see cref="SceneRefSO"/> asset.</returns>
+        private static SceneRefSO CreateSceneRefAsset(SceneAsset sceneAsset, string scenePath)
+        {
             SceneRefSO sceneRef = ScriptableObject.CreateInstance<SceneRefSO>();
             string path = Path.GetDirectoryName(scenePath);
             path = Path.Combine(path, $"{sceneAsset.name}.asset");
@@ -201,7 +231,7 @@ namespace SideXP.SceneRefs.EditorOnly
 
             AssetDatabase.CreateAsset(sceneRef, path);
             Debug.Log($"{nameof(SceneRefSO)} asset created for scene {sceneAsset.name} at {path}", sceneRef);
-            return true;
+            return sceneRef;
         }
 
     }
