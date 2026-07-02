@@ -10,7 +10,7 @@ namespace SideXP.SceneRefs.EditorOnly
     /// <summary>
     /// Custom editor for <see cref="SceneAsset"/>.
     /// </summary>
-    /// <remarks>THis will overwrite the custom editor from Core package, adding a button to generate a <see cref="SceneRefSO"/> asset for
+    /// <remarks>This will overwrite the custom editor from Core package, adding a button to generate a <see cref="SceneRefSO"/> asset for
     /// the selected <see cref="SceneAsset"/>.</remarks>
     [CustomEditor(typeof(SceneAsset))]
     public class SceneAssetEditor : Editor

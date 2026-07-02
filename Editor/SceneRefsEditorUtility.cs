@@ -19,9 +19,6 @@ namespace SideXP.SceneRefs.EditorOnly
         private const string SceneMenu = "Assets/Create/Scene Ref Asset";
         private const string CreateMenu = "Assets/Create/" + Constants.CreateAssetMenu + "/Scene Ref Asset";
 
-        private const string SceneAssetProp = "_sceneAsset";
-        private const string ScenePathProp = "_scenePath";
-
         /// <summary>
         /// Generates <see cref="SceneRefSO"/> assets for all the existing scenes in the project.
         /// </summary>
@@ -48,8 +45,7 @@ namespace SideXP.SceneRefs.EditorOnly
             // Check if a scene ref exists for the given scene
             foreach (SceneRefSO existingSceneRef in ObjectUtility.FindAssets<SceneRefSO>(false))
             {
-                SerializedObject sceneRefObj = new SerializedObject(existingSceneRef);
-                if (sceneRefObj.FindProperty(SceneAssetProp).objectReferenceValue == sceneAsset)
+                if (existingSceneRef.SceneAsset == sceneAsset)
                     return existingSceneRef;
             }
             return null;
@@ -116,8 +112,7 @@ namespace SideXP.SceneRefs.EditorOnly
             // For each scene ref asset in the project
             foreach (SceneRefSO sceneRef in ObjectUtility.FindAssets<SceneRefSO>())
             {
-                SerializedObject sceneRefObj = new SerializedObject(sceneRef);
-                SceneAsset sceneAsset = sceneRefObj.FindProperty(SceneAssetProp).objectReferenceValue as SceneAsset;
+                SceneAsset sceneAsset = sceneRef.SceneAsset;
 
                 // Destroy the scene ref asset if the related scene has been deleted or is not valid.
                 if (sceneAsset == null)
@@ -127,12 +122,12 @@ namespace SideXP.SceneRefs.EditorOnly
                 }
 
                 string path = AssetDatabase.GetAssetPath(sceneAsset);
-                SerializedProperty scenePathProp = sceneRefObj.FindProperty(ScenePathProp);
 
                 // Update scene path if needed
-                if (scenePathProp.stringValue != path)
+                if (sceneRef.ScenePath != path)
                 {
-                    scenePathProp.stringValue = path;
+                    SerializedObject sceneRefObj = new SerializedObject(sceneRef);
+                    sceneRefObj.FindProperty(SceneRefSO.ScenePathProp).stringValue = path;
                     sceneRefObj.ApplyModifiedPropertiesWithoutUndo();
                 }
 
@@ -151,7 +146,7 @@ namespace SideXP.SceneRefs.EditorOnly
             foreach (Object obj in Selection.objects)
             {
                 if (obj is not SceneAsset sceneAsset)
-                    return;
+                    continue;
 
                 GenerateSceneRef(sceneAsset);
             }
@@ -199,8 +194,8 @@ namespace SideXP.SceneRefs.EditorOnly
             // Set serialized properties
             {
                 SerializedObject sceneRefObj = new SerializedObject(sceneRef);
-                sceneRefObj.FindProperty(SceneAssetProp).objectReferenceValue = sceneAsset;
-                sceneRefObj.FindProperty(ScenePathProp).stringValue = scenePath;
+                sceneRefObj.FindProperty(SceneRefSO.SceneAssetProp).objectReferenceValue = sceneAsset;
+                sceneRefObj.FindProperty(SceneRefSO.ScenePathProp).stringValue = scenePath;
                 sceneRefObj.ApplyModifiedPropertiesWithoutUndo();
             }
 

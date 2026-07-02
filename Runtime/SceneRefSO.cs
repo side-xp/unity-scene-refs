@@ -9,7 +9,7 @@ namespace SideXP.SceneRefs
     /// <summary>
     /// Represents a scene in the project at runtime.
     /// </summary>
-    [HelpURL(Constants.BaseHelpUrl)]
+    [HelpURL(Constants.BaseHelpUrl + "/api/SideXP.SceneRefs/ " + nameof(SceneRefSO))]
     public class SceneRefSO : ScriptableObject
     {
 
@@ -23,6 +23,16 @@ namespace SideXP.SceneRefs
         [SerializeField, HideInInspector]
         private UnityEditor.SceneAsset _sceneAsset = null;
         internal UnityEditor.SceneAsset SceneAsset => _sceneAsset;
+
+        /// <summary>
+        /// Name of the <see cref="_sceneAsset"/> serialized field, for editor code that accesses it through a serialized object.
+        /// </summary>
+        internal const string SceneAssetProp = nameof(_sceneAsset);
+
+        /// <summary>
+        /// Name of the <see cref="_scenePath"/> serialized field, for editor code that accesses it through a serialized object.
+        /// </summary>
+        internal const string ScenePathProp = nameof(_scenePath);
 #endif
 
         /// <summary>

@@ -8,7 +8,7 @@ namespace SideXP.SceneRefs.EditorOnly
     /// <summary>
     /// Generate menus to edit the Scene Refs package editor settings.
     /// </summary>
-    public class SceneRefsEditorSettingsProvider : DefaultConfigSettingsProvider
+    public class SceneRefsEditorConfigProvider : DefaultConfigSettingsProvider
     {
 
         [SettingsProvider]
