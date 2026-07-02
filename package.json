@@ -1,6 +1,6 @@
 {
   "name": "com.side-xp.scene-refs",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Allows you to use asset references instead of names and ids to load your scenes.",
   "displayName": "SideXP - Scene Refs",
   "unity": "2021.3",
