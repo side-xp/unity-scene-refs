@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [1.1.1](https://github.com/side-xp/unity-scene-refs/compare/v1.1.0...v1.1.1) (2026-07-02)
+
+
+### Bug Fixes
+
+* fixed typos and duplications ([b9b7f2f](https://github.com/side-xp/unity-scene-refs/commit/b9b7f2f36802f4c57a9f675c429a9ab69bd74894))
+* improved scene refs processor behavior ([4fb22fa](https://github.com/side-xp/unity-scene-refs/commit/4fb22faf8c118b35931cda5f14039826b76e713c))
+
 ## [1.1.0](https://github.com/side-xp/unity-scene-refs/compare/v1.0.0...v1.1.0) (2026-06-28)
 
 
