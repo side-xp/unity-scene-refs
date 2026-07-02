@@ -1,4 +1,4 @@
-# Scene Refs
+# SideXP - Scene Refs (Unity)
 
 One of the historical flaws of Unity is that [`SceneAsset`](https://docs.unity3d.com/ScriptReference/SceneAsset.html), the type that represents the actual asset of a scene, is declared in `UnityEditor`, making this kind of asset available only in the editor.
 

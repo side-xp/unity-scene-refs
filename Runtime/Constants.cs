@@ -11,7 +11,7 @@ namespace SideXP.SceneRefs
         public const string CreateAssetMenu = SideXP.Core.Constants.CreateAssetMenu;
 
         /// <inheritdoc cref="SideXP.Core.Constants.BaseHelpUrl"/>
-        public const string BaseHelpUrl = "https://gitlab.com/sideways-experiments/frameworks/unity/library/scene-refs";
+        public const string BaseHelpUrl = "https://side-xp.github.io/unity-scene-refs";
 
     }
 

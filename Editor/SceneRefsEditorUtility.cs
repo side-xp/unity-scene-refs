@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.IO;
 
 using UnityEngine;
@@ -19,17 +20,31 @@ namespace SideXP.SceneRefs.EditorOnly
         private const string SceneMenu = "Assets/Create/Scene Ref Asset";
         private const string CreateMenu = "Assets/Create/" + Constants.CreateAssetMenu + "/Scene Ref Asset";
 
-        private const string SceneAssetProp = "_sceneAsset";
-        private const string ScenePathProp = "_scenePath";
-
         /// <summary>
         /// Generates <see cref="SceneRefSO"/> assets for all the existing scenes in the project.
         /// </summary>
         /// <remarks>The new <see cref="SceneRefSO"/> assets are generated in the same folder as the scene they represent.</remarks>
         public static void GenerateAllSceneRefs()
         {
+            // Collect the scenes that already have a ref once, so we don't rescan every ref for each scene (which would be O(n²)).
+            HashSet<SceneAsset> referencedScenes = new HashSet<SceneAsset>();
+            foreach (SceneRefSO sceneRef in ObjectUtility.FindAssets<SceneRefSO>(false))
+            {
+                if (sceneRef.SceneAsset != null)
+                    referencedScenes.Add(sceneRef.SceneAsset);
+            }
+
             foreach (SceneAsset sceneAsset in ObjectUtility.FindAssets<SceneAsset>())
-                GenerateSceneRef(sceneAsset, true);
+            {
+                string scenePath = AssetDatabase.GetAssetPath(sceneAsset);
+                // Only generate refs for scenes inside this project's /Assets directory that don't already have one.
+                if (!scenePath.StartsWith(PathUtility.AssetsDirectory))
+                    continue;
+                if (referencedScenes.Contains(sceneAsset))
+                    continue;
+
+                CreateSceneRefAsset(sceneAsset, scenePath);
+            }
         }
 
         /// <inheritdoc cref="GenerateSceneRef(SceneAsset, bool)"/>
@@ -48,8 +63,7 @@ namespace SideXP.SceneRefs.EditorOnly
             // Check if a scene ref exists for the given scene
             foreach (SceneRefSO existingSceneRef in ObjectUtility.FindAssets<SceneRefSO>(false))
             {
-                SerializedObject sceneRefObj = new SerializedObject(existingSceneRef);
-                if (sceneRefObj.FindProperty(SceneAssetProp).objectReferenceValue == sceneAsset)
+                if (existingSceneRef.SceneAsset == sceneAsset)
                     return existingSceneRef;
             }
             return null;
@@ -116,8 +130,7 @@ namespace SideXP.SceneRefs.EditorOnly
             // For each scene ref asset in the project
             foreach (SceneRefSO sceneRef in ObjectUtility.FindAssets<SceneRefSO>())
             {
-                SerializedObject sceneRefObj = new SerializedObject(sceneRef);
-                SceneAsset sceneAsset = sceneRefObj.FindProperty(SceneAssetProp).objectReferenceValue as SceneAsset;
+                SceneAsset sceneAsset = sceneRef.SceneAsset;
 
                 // Destroy the scene ref asset if the related scene has been deleted or is not valid.
                 if (sceneAsset == null)
@@ -127,12 +140,12 @@ namespace SideXP.SceneRefs.EditorOnly
                 }
 
                 string path = AssetDatabase.GetAssetPath(sceneAsset);
-                SerializedProperty scenePathProp = sceneRefObj.FindProperty(ScenePathProp);
 
                 // Update scene path if needed
-                if (scenePathProp.stringValue != path)
+                if (sceneRef.ScenePath != path)
                 {
-                    scenePathProp.stringValue = path;
+                    SerializedObject sceneRefObj = new SerializedObject(sceneRef);
+                    sceneRefObj.FindProperty(SceneRefSO.ScenePathProp).stringValue = path;
                     sceneRefObj.ApplyModifiedPropertiesWithoutUndo();
                 }
 
@@ -151,7 +164,7 @@ namespace SideXP.SceneRefs.EditorOnly
             foreach (Object obj in Selection.objects)
             {
                 if (obj is not SceneAsset sceneAsset)
-                    return;
+                    continue;
 
                 GenerateSceneRef(sceneAsset);
             }
@@ -191,6 +204,18 @@ namespace SideXP.SceneRefs.EditorOnly
                 return false;
             }
 
+            CreateSceneRefAsset(sceneAsset, scenePath);
+            return true;
+        }
+
+        /// <summary>
+        /// Creates and saves a <see cref="SceneRefSO"/> asset next to a given scene, without checking whether one already exists.
+        /// </summary>
+        /// <param name="sceneAsset">The scene asset to create a ref for.</param>
+        /// <param name="scenePath">The asset path of <paramref name="sceneAsset"/>.</param>
+        /// <returns>Returns the created <see cref="SceneRefSO"/> asset.</returns>
+        private static SceneRefSO CreateSceneRefAsset(SceneAsset sceneAsset, string scenePath)
+        {
             SceneRefSO sceneRef = ScriptableObject.CreateInstance<SceneRefSO>();
             string path = Path.GetDirectoryName(scenePath);
             path = Path.Combine(path, $"{sceneAsset.name}.asset");
@@ -199,14 +224,14 @@ namespace SideXP.SceneRefs.EditorOnly
             // Set serialized properties
             {
                 SerializedObject sceneRefObj = new SerializedObject(sceneRef);
-                sceneRefObj.FindProperty(SceneAssetProp).objectReferenceValue = sceneAsset;
-                sceneRefObj.FindProperty(ScenePathProp).stringValue = scenePath;
+                sceneRefObj.FindProperty(SceneRefSO.SceneAssetProp).objectReferenceValue = sceneAsset;
+                sceneRefObj.FindProperty(SceneRefSO.ScenePathProp).stringValue = scenePath;
                 sceneRefObj.ApplyModifiedPropertiesWithoutUndo();
             }
 
             AssetDatabase.CreateAsset(sceneRef, path);
             Debug.Log($"{nameof(SceneRefSO)} asset created for scene {sceneAsset.name} at {path}", sceneRef);
-            return true;
+            return sceneRef;
         }
 
     }

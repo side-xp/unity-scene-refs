@@ -2,7 +2,7 @@
 # https://zensical.org/docs/setup/basics/#settings
 
 [project]
-site_name = "SideXP - Unity Scene Refs package"
+site_name = "SideXP - Scene Refs (Unity)"
 site_description = "Allows you to use asset references instead of names and ids to load your scenes."
 site_author = "Sideways Experiments"
 copyright = """

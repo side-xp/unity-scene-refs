@@ -15,9 +15,6 @@ namespace SideXP.SceneRefs.EditorOnly
 
         #region Fields
 
-        private const string SceneAssetProp = "_sceneAsset";
-        private const string ScenePathProp = "_scenePath";
-
         private SerializedProperty _sceneAssetProp = null;
         private SerializedProperty _scenePathProp = null;
 
@@ -28,8 +25,8 @@ namespace SideXP.SceneRefs.EditorOnly
 
         private void OnEnable()
         {
-            _sceneAssetProp = serializedObject.FindProperty(SceneAssetProp);
-            _scenePathProp = serializedObject.FindProperty(ScenePathProp);
+            _sceneAssetProp = serializedObject.FindProperty(SceneRefSO.SceneAssetProp);
+            _scenePathProp = serializedObject.FindProperty(SceneRefSO.ScenePathProp);
         }
 
         #endregion
