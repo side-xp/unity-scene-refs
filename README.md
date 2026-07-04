@@ -39,7 +39,7 @@ Scene references assets (or *`SceneRef`*) fix this flaw, and allow you to use as
 Complete documentation available at https://side-xp.github.io/unity-scene-refs
 
 <!-- docs:remove:end -->
-If you need help or just want to chat with the community and the *Sideways Experiments* core team, you're welcome to join our [Discord server](https://discord.gg/bMK2d47JaE)!
+If you need help or just want to chat with the community and the *Sideways Experiments* core team, you're welcome to join our [Discord server](https://discord.gg/G49RUZ9F2N)!
 
 ## Contributing
 
