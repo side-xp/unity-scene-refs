@@ -15,8 +15,8 @@ namespace SideXP.SceneRefs.Tests
     /// </summary>
     /// <remarks>
     /// A real <c>.unity</c> scene can't be fabricated without opening a scene (which the test environment forbids), so these tests cover
-    /// the behaviour of a ref whose scene is <em>not loaded</em> — most importantly the <see cref="SceneRefSO.SceneName"/> fallback that
-    /// derives the name from the stored path. The refs are in-memory objects whose private <c>_scenePath</c> is seeded through a
+    /// the behaviour of a ref whose scene is <em>not loaded</em> (most importantly the <see cref="SceneRefSO.SceneName"/> fallback that
+    /// derives the name from the stored path). The refs are in-memory objects whose private <c>_scenePath</c> is seeded through a
     /// <see cref="SerializedObject"/> (the field name is exposed via the internal <see cref="SceneRefSO.ScenePathProp"/>). Scene loading
     /// and the <c>Load*/Unload*</c> forwarders to <see cref="UnityEngine.SceneManagement.SceneManager"/> are intentionally not exercised.
     /// </remarks>
