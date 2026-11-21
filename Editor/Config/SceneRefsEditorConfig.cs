@@ -10,7 +10,7 @@ namespace SideXP.SceneRefs.EditorOnly
     /// Editor config for the Scene Refs package features.
     /// </summary>
     [EditorConfig(EEditorConfigScope.Project)]
-    public class SceneRefsEditorConfig : ScriptableObject, IEditorConfig
+    public class SceneRefsEditorConfig : EditorConfig<SceneRefsEditorConfig>
     {
 
         #region Fields
@@ -25,8 +25,8 @@ namespace SideXP.SceneRefs.EditorOnly
 
         #region Lifecycle
 
-        /// <inheritdoc cref="IEditorConfig.PostLoad"/>
-        public void PostLoad()
+        /// <inheritdoc/>
+        protected override void OnLoaded()
         {
             AutoGenerateSceneRefs = _autoGenerateSceneRefs;
         }
@@ -35,14 +35,6 @@ namespace SideXP.SceneRefs.EditorOnly
 
 
         #region Public API
-
-        /// <summary>
-        /// Gets the loaded settings or load them from disk if not already.
-        /// </summary>
-        public static SceneRefsEditorConfig Instance => EditorConfigUtility.Get<SceneRefsEditorConfig>();
-
-        /// <inheritdoc cref="Instance"/>
-        public static SceneRefsEditorConfig I => Instance;
 
         /// <inheritdoc cref="_autoGenerateSceneRefs"/>
         public bool AutoGenerateSceneRefs
