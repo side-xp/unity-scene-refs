@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [1.2.0](https://github.com/side-xp/unity-scene-refs/compare/v1.1.2...v1.2.0) (2026-11-22)
+
+
+### Features
+
+* migrate to core lib 1.6 ([8a76774](https://github.com/side-xp/unity-scene-refs/commit/8a76774c2e4fe88c11687853dcbbc660e6832890))
+
 ## [1.1.2](https://github.com/side-xp/unity-scene-refs/compare/v1.1.1...v1.1.2) (2026-07-04)
 
 
