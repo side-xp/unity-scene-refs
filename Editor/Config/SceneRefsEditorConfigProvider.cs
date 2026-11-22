@@ -8,13 +8,20 @@ namespace SideXP.SceneRefs.EditorOnly
     /// <summary>
     /// Generate menus to edit the Scene Refs package editor settings.
     /// </summary>
-    public class SceneRefsEditorConfigProvider : DefaultConfigSettingsProvider
+    public static class SceneRefsEditorConfigProvider
     {
 
+        /// <summary>
+        /// Registers the page to edit the Scene Refs package settings from the Project Settings window.
+        /// </summary>
+        /// <returns>Returns the created settings provider.</returns>
         [SettingsProvider]
         private static SettingsProvider RegisterProjectSettingsMenu()
         {
-            return MakeSettingsProvider(SceneRefsEditorConfig.I, EditorConstants.ProjectSettings + "/Scene Refs", SettingsScope.Project);
+            return EditorConfigSettingsProvider.Create<SceneRefsEditorConfig>(
+                EditorConstants.ProjectSettings + "/Scene Refs",
+                SettingsScope.Project
+            );
         }
 
     }
